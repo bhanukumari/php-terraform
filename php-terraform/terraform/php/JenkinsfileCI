@@ -7,28 +7,31 @@ pipeline {
              git branch: 'main', url: 'https://github.com/bhanukumari/php-terraform.git' 
             }
         }
-         stage('terraform init') {
+        stage('terraform init') {
             steps {
-               sh '''
-               cd php-terraform/terraform/php
-               terraform init
-               '''
+               dir ('php-terraform/terraform/php'){
+                script {
+                terraform init
+                }
+              }
             }
         }
           stage('terraform validate') {
             steps {
-               sh '''
-               cd php-terraform/terraform/php
-               terraform validate
-               '''
+               dir ('php-terraform/terraform/php'){
+                script {
+                terraform validate
+                }
+              }
             }
         }
          stage('terraform plan') {
             steps {
-               sh '''
-               cd php-terraform/terraform/php
-               terraform plan
-               '''
+                dir ('php-terraform/terraform/php'){
+                script {
+                terraform plan
+                }
+              }
             }
         }
         //  stage('terraform apply') {
