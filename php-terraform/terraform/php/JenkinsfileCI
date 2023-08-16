@@ -7,7 +7,7 @@ pipeline {
              git branch: 'main', url: 'https://github.com/bhanukumari/php-terraform.git' 
             }
         }
-         stage('terraorm init') {
+         stage('terraform init') {
             steps {
                sh '''
                cd php-terraform/terraform/php
@@ -15,7 +15,7 @@ pipeline {
                '''
             }
         }
-          stage('terraorm validate') {
+          stage('terraform validate') {
             steps {
                sh '''
                cd php-terraform/terraform/php
@@ -23,7 +23,7 @@ pipeline {
                '''
             }
         }
-         stage('terraorm plan') {
+         stage('terraform plan') {
             steps {
                sh '''
                cd php-terraform/terraform/php
@@ -31,7 +31,7 @@ pipeline {
                '''
             }
         }
-        //  stage('terraorm apply') {
+        //  stage('terraform apply') {
         //     steps {
         //       sh '''
         //       cd php-terraform/terraform/php
