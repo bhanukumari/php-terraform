@@ -11,37 +11,29 @@ pipeline {
             steps {
                dir ('php-terraform/terraform/php'){
                 script {
-                terraform init
+                   sh 'terraform init'
                 }
-              }
+             }
             }
         }
-          stage('terraform validate') {
+         stage('terraform validate') {
             steps {
                dir ('php-terraform/terraform/php'){
                 script {
-                terraform validate
+                   sh 'terraform validate'
                 }
-              }
+             }
             }
         }
          stage('terraform plan') {
             steps {
-                dir ('php-terraform/terraform/php'){
+               dir ('php-terraform/terraform/php'){
                 script {
-                terraform plan
+                   sh 'terraform plan'
                 }
-              }
+             }
             }
         }
-        //  stage('terraform apply') {
-        //     steps {
-        //       sh '''
-        //       cd php-terraform/terraform/php
-        //       terraform apply
-        //       '''
-        //     }
-        // }
          stage('Apply') {
                 steps {  
                     timeout(time: 300, unit: 'SECONDS') {
