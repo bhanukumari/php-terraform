@@ -1,0 +1,75 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('clone') {
+            steps {
+             git branch: 'main', url: 'https://github.com/bhanukumari/php-terraform.git' 
+            }
+        }
+         stage('terraorm init') {
+            steps {
+               sh '''
+               cd php-terraform/terraform/php
+               terraform init
+               '''
+            }
+        }
+          stage('terraorm validate') {
+            steps {
+               sh '''
+               cd php-terraform/terraform/php
+               terraform validate
+               '''
+            }
+        }
+         stage('terraorm plan') {
+            steps {
+               sh '''
+               cd php-terraform/terraform/php
+               terraform plan
+               '''
+            }
+        }
+        //  stage('terraorm apply') {
+        //     steps {
+        //       sh '''
+        //       cd php-terraform/terraform/php
+        //       terraform apply
+        //       '''
+        //     }
+        // }
+         stage('Apply') {
+                steps {  
+                    timeout(time: 300, unit: 'SECONDS') {
+ 
+                     script {                  
+                    def USER_INPUT = input(
+                    message: 'Please select the required input',
+                    parameters: [
+                            [$class: 'ChoiceParameterDefinition',
+                             choices: ['Nothing','Apply','Destroy'].join('\n'),
+                             name: 'input',
+                             description: 'Menu - select box option']
+                    ]
+                    )
+
+                    echo "The answer is: ${USER_INPUT}"
+
+                    if( "${USER_INPUT}" == "Apply"){
+                        //do something
+                        terraform apply -auto-approve
+                    } else if( "${USER_INPUT}" == "Destroy") {
+                        //do something else
+                       terraform destroy -auto-approve
+                    } else {
+                        
+                            }
+                        
+                    
+                }
+                    }
+            }
+            }
+    }
+}
