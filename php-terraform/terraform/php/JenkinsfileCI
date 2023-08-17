@@ -34,16 +34,16 @@ pipeline {
              }
             }
         }
-         stage('Apply') {
+        stage('Apply') {
                 steps {  
                     timeout(time: 300, unit: 'SECONDS') {
  
-                     script {                  
+                    script {                  
                     def USER_INPUT = input(
                     message: 'Please select the required input',
                     parameters: [
                             [$class: 'ChoiceParameterDefinition',
-                             choices: ['Nothing','Apply','Destroy'].join('\n'),
+                             choices: ['Apply','Destroy'].join('\n'),
                              name: 'input',
                              description: 'Menu - select box option']
                     ]
